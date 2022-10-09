@@ -17,7 +17,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 60 * 60 * 1000 } // 1 hour
+    cookie: { maxAge: 2 * 60 * 1000 } // 2 mins
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,7 +41,8 @@ app.get('/', (req,res)=>{
 })
 
 // Book Route
-app.use('/api', connectEnsureLogin.ensureLoggedIn(), bookRoute)
+app.use('/api/books', connectEnsureLogin.ensureLoggedIn('/api/login'), bookRoute)
+
 // user route
 app.use('/api',userRoute)
 
