@@ -2,7 +2,6 @@ const userModel = require('../models/userModel')
 const passport = require('passport')
 
 
-
 async function signUp(req,res){
     const user = req.body
     userModel.register(new userModel({username:user.username}), user.password, (err,user)=>{
@@ -28,11 +27,11 @@ async function loginUser(req,res){
 
 async function logOut(req,res){
     req.logout()
-    res.redirect('/')
+    res.render('index')
 }
 
 async function loginExUser(req,res){
-    res.redirect('/api/books')
+    res.render('login')
 }
 
 
