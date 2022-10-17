@@ -34,6 +34,28 @@ async function loginExUser(req,res){
     res.render('login')
 }
 
+async function changePassword(req,res){
+    const userInfo = req.body
+    await userModel.findOne({username:userInfo.username}, (err,user)=>{
+        if(err){
+            res.render('reset', {error:err})
+        }
+        else{
+            user.changePassword(userInfo.password, userInfo.new_password, (err,user)=>{
+                if(err){
+                    res.status(500).send({error:err})
+                }
+                else{
+                    res.render('reset', {error:null, success:'Password changed successfully'})
+                }
+            })
+        }
+    })
+}
 
-module.exports={signUp, signUpExUser, loginUser, logOut, loginExUser}
+async function changePasswordPage(req,res){
+    res.render('reset')
+}
+
+module.exports={signUp, signUpExUser, loginUser, logOut, loginExUser, changePasswordPage, changePassword}
 // module.exports = {signUp, signUpExUser}
